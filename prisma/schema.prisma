@@ -13,13 +13,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id    Int      @id @default(autoincrement())
-  email String
-  name  String?
+model Fertilization {
+  id          Int      @id @default(autoincrement())
+  amount      Int
+  createdAt   DateTime
+  position    Json
 }
 
-model MyString {
-  id   Int @id @default(autoincrement())
-  name String
+model Sample {
+  id          Int @id @default(autoincrement())
+  amount      Int
+  position    Json
+  createdAt   DateTime
 }
