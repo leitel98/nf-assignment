@@ -22,7 +22,22 @@ export default function RootLayout({
           rel='stylesheet'
         />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <main className='flex min-h-screen flex-col w-full items-center gap-8 p-8'>
+          <div className='flex justify-between items-center pl-16 pr-24 w-full py-4 rounded-lg bg-green-600/30 shadow-lg shadow-green-950'>
+            <div className='flex flex-col gap-2'>
+              <h1 className='text-5xl font-bold text-teal-200'>⛰️Soiler</h1>
+              <h2 className='text-2xl font-semibold text-teal-300'>
+                Your soil data saver
+              </h2>
+            </div>
+            <h2 className='text-3xl font-medium text-teal-200'>
+              Fill your data here
+            </h2>
+          </div>
+          {children}
+        </main>
+      </body>
     </html>
   );
 }
