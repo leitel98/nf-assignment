@@ -11,8 +11,13 @@ export default async function handler(
     if (!req.body) {
       res.status(400).json({ message: 'Missing required fields' });
     }
-
-    console.log(req.body);
+    await prisma.sample.create({
+      data: {
+        createdAt: date,
+        amount,
+        position,
+      },
+    });
 
     res.status(200).json({ message: 'Sample created' });
   } catch (error) {
