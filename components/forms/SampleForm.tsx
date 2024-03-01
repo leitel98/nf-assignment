@@ -7,12 +7,12 @@ const SampleForm = () => {
   const [sampleData, setSampleData] = useState<SampleDataT>({
     date: new Date(),
     amount: 0,
-    coordinate: {
+    position: {
       latitude: 0,
       longitude: 0,
     },
   });
-
+  console.log(sampleData);
   return (
     <>
       <h3 className='text-xl font-medium'>Sample</h3>
@@ -40,11 +40,45 @@ const SampleForm = () => {
           <input
             type='number'
             placeholder='Longitude'
+            value={
+              sampleData.position.longitude === 0
+                ? undefined
+                : sampleData.position.longitude
+            }
+            onChange={(e) =>
+              setSampleData((prev) => {
+                const newAmount = parseFloat(e.target.value);
+                return {
+                  ...prev,
+                  position: {
+                    ...prev.position,
+                    longitude: isNaN(newAmount) ? 0 : newAmount,
+                  },
+                };
+              })
+            }
             className='w-full focus:outline-none rounded-lg bg-slate-400 text-slate-900 placeholder-slate-700 px-4 py-2'
           />
           <input
             type='number'
             placeholder='Latitude'
+            value={
+              sampleData.position.latitude === 0
+                ? undefined
+                : sampleData.position.latitude
+            }
+            onChange={(e) =>
+              setSampleData((prev) => {
+                const newAmount = parseFloat(e.target.value);
+                return {
+                  ...prev,
+                  position: {
+                    ...prev.position,
+                    latitude: isNaN(newAmount) ? 0 : newAmount,
+                  },
+                };
+              })
+            }
             className='w-full focus:outline-none rounded-lg bg-slate-400 text-slate-900 placeholder-slate-700 px-4 py-2'
           />
         </div>

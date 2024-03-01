@@ -6,7 +6,7 @@ type CoordinateT = {
 type SampleDataT = {
   date: Date;
   amount: number;
-  coordinate: CoordinateT;
+  position: CoordinateT;
 };
 
 type FertilizationDataT = {
