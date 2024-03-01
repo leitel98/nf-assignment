@@ -3,16 +3,31 @@
 import { useState } from 'react';
 import { SampleDataT } from '@/types';
 
+const INITIAL_FORM: SampleDataT = {
+  date: new Date(),
+  amount: '',
+  position: {
+    latitude: '',
+    longitude: '',
+  },
+};
+
 const SampleForm = () => {
-  const [sampleData, setSampleData] = useState<SampleDataT>({
-    date: new Date(),
-    amount: 0,
-    position: {
-      latitude: 0,
-      longitude: 0,
-    },
-  });
+  const [sampleData, setSampleData] = useState<SampleDataT>(INITIAL_FORM);
   console.log(sampleData);
+  async function createSample(data: SampleDataT) {
+    try {
+      fetch('/api/submit-sample', {
+        body: JSON.stringify(data),
+        headers: {
+          'Content-type': 'application/json',
+        },
+        method: 'POST',
+      }).then(() => setSampleData(INITIAL_FORM));
+    } catch (error) {
+      console.error(error);
+    }
+  }
   return (
     <>
       <h3 className='text-xl font-medium'>Sample</h3>
@@ -22,7 +37,7 @@ const SampleForm = () => {
           <input
             type='number'
             placeholder='Average Carbon %'
-            value={sampleData.amount === 0 ? undefined : sampleData.amount}
+            value={sampleData.amount}
             onChange={(e) =>
               setSampleData((prev) => {
                 const newAmount = parseFloat(e.target.value);
@@ -40,11 +55,7 @@ const SampleForm = () => {
           <input
             type='number'
             placeholder='Longitude'
-            value={
-              sampleData.position.longitude === 0
-                ? undefined
-                : sampleData.position.longitude
-            }
+            value={sampleData.position.longitude}
             onChange={(e) =>
               setSampleData((prev) => {
                 const newAmount = parseFloat(e.target.value);
@@ -62,11 +73,7 @@ const SampleForm = () => {
           <input
             type='number'
             placeholder='Latitude'
-            value={
-              sampleData.position.latitude === 0
-                ? undefined
-                : sampleData.position.latitude
-            }
+            value={sampleData.position.latitude}
             onChange={(e) =>
               setSampleData((prev) => {
                 const newAmount = parseFloat(e.target.value);
@@ -83,6 +90,12 @@ const SampleForm = () => {
           />
         </div>
       </section>
+      <button
+        onClick={() => createSample(sampleData)}
+        className='rounded-lg px-4 py-2 bg-violet-700/30'
+      >
+        Send Sample
+      </button>
     </>
   );
 };

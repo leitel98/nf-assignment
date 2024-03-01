@@ -1,17 +1,17 @@
 type CoordinateT = {
-  latitude: number;
-  longitude: number;
+  latitude: number | '';
+  longitude: number | '';
 };
 
 type SampleDataT = {
   date: Date;
-  amount: number;
+  amount: number | '';
   position: CoordinateT;
 };
 
 type FertilizationDataT = {
   date: Date;
-  amount: number;
+  amount: number | '';
   coordinates: CoordinateT[];
 };
 
