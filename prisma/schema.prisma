@@ -14,15 +14,15 @@ datasource db {
 }
 
 model Fertilization {
-  id          Int      @id @default(autoincrement())
-  amount      Int
-  createdAt   DateTime
-  position    Json
+  id        Int      @id @default(autoincrement())
+  amount    Int
+  position  Json
+  createdAt DateTime
 }
 
 model Sample {
-  id          Int @id @default(autoincrement())
-  amount      Int
-  position    Json
-  createdAt   DateTime
+  id        Int      @id @default(autoincrement())
+  amount    Int
+  position  Json[]
+  createdAt DateTime
 }
