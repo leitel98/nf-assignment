@@ -3,5 +3,19 @@
 @tailwind utilities;
 
 body {
-  @apply bg-slate-900
+  @apply bg-slate-900 text-gray-50;
+}
+.mapboxgl-map {
+  @apply rounded-lg;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* For Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
 }
