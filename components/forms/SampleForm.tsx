@@ -12,22 +12,28 @@ const INITIAL_FORM: SampleDataT = {
   },
 };
 
-const SampleForm = () => {
+const SampleForm = ({ setSamples }: { setSamples: (prev: any) => void }) => {
   const [sampleData, setSampleData] = useState<SampleDataT>(INITIAL_FORM);
-  console.log(sampleData);
+
   async function createSample(data: SampleDataT) {
     try {
-      fetch('/api/submit-sample', {
+      const response = await fetch('/api/submit-sample', {
         body: JSON.stringify(data),
         headers: {
           'Content-type': 'application/json',
         },
         method: 'POST',
-      }).then(() => setSampleData(INITIAL_FORM));
+      });
+
+      const newSample = await response.json();
+
+      setSamples((prev: any) => [...prev, newSample]);
+      setSampleData(INITIAL_FORM);
     } catch (error) {
       console.error(error);
     }
   }
+
   return (
     <>
       <h3 className='text-xl font-medium'>Sample</h3>

@@ -31,9 +31,6 @@ export default function RootLayout({
                 Your soil data saver
               </h2>
             </div>
-            <h2 className='text-3xl font-medium text-teal-200'>
-              Fill your data here
-            </h2>
           </div>
           {children}
         </main>
