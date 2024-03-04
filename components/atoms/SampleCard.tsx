@@ -27,8 +27,8 @@ const SampleCard = ({
     <div className='flex items-center justify-between bg-teal-600/30 rounded-md px-4 py-2 border-b border-r border-teal-600'>
       <div className='flex items-center w-full gap-4'>
         <p>
-          {sample.createdAt.getDate()}/{sample.createdAt.getMonth() + 1}/
-          {sample.createdAt.getFullYear()}
+          {sample.createdAt?.getDate()}/{sample.createdAt?.getMonth() + 1}/
+          {sample.createdAt?.getFullYear()}
         </p>
         <p>🧪 Carbon: {sample.amount} kg</p>
         <p>

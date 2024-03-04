@@ -11,7 +11,7 @@ const sampleLayerStyle: CircleLayer = {
   id: 'point',
   type: 'circle',
   paint: {
-    'circle-radius': 10,
+    'circle-radius': 8,
     'circle-color': 'red',
   },
 };

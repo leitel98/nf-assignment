@@ -17,7 +17,7 @@ const SampleForm = ({ setSamples }: { setSamples: (prev: any) => void }) => {
 
   async function createSample(data: SampleDataT) {
     try {
-      const response = await fetch('/api/submit-sample', {
+      await fetch('/api/submit-sample', {
         body: JSON.stringify(data),
         headers: {
           'Content-type': 'application/json',
@@ -25,10 +25,7 @@ const SampleForm = ({ setSamples }: { setSamples: (prev: any) => void }) => {
         method: 'POST',
       });
 
-      const newSample = await response.json();
-
-      setSamples((prev: any) => [...prev, newSample]);
-      setSampleData(INITIAL_FORM);
+      window.location.href = '/';
     } catch (error) {
       console.error(error);
     }
