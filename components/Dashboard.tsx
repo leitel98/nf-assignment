@@ -5,9 +5,17 @@ import CustomMap from './map/CustomMap';
 import SampleForm from './forms/SampleForm';
 import FertilizationForm from './forms/FertilizationForm';
 import SampleCard from './atoms/SampleCard';
+import { FertilizationT, SampleT } from '@/types';
+import FertilizationCard from './atoms/FertilizationCard';
 
-const Dashboard = ({ samples }: { samples: any }) => {
+interface DashboardI {
+  samples: SampleT[];
+  fertilizations: FertilizationT[];
+}
+
+const Dashboard = ({ samples, fertilizations }: DashboardI) => {
   const [samplesData, setSamplesData] = useState(samples);
+  const [fertilizationsData, setFertilizationsData] = useState(fertilizations);
 
   return (
     <>
@@ -18,13 +26,23 @@ const Dashboard = ({ samples }: { samples: any }) => {
           <FertilizationForm />
         </section>
       </div>
-      <section className='grid grid-cols-2 gap-4 w-full bg-emerald-600/30 rounded-lg shadow-lg shadow-emerald-900 p-4'>
-        <div className='flex flex-col w-full gap-2'>
+      <section className='flex gap-4 w-full bg-emerald-600/30 rounded-lg shadow-lg shadow-emerald-900 p-4'>
+        <div className='flex flex-col w-[80%] gap-2'>
+          <h3 className='text-center text-xl font-medium'>Samples</h3>
           {samplesData.map((sample: any) => (
             <SampleCard
               sample={sample}
               key={sample.id}
               setSamples={setSamplesData}
+            />
+          ))}
+        </div>
+        <div className='flex flex-col w-full gap-2'>
+          <h3 className='text-center text-xl font-medium'>Fertilizations</h3>
+          {fertilizationsData.map((fertilization) => (
+            <FertilizationCard
+              fertilization={fertilization}
+              key={fertilization.id}
             />
           ))}
         </div>

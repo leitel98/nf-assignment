@@ -18,10 +18,23 @@ type SampleT = {
   position: JsonValue;
 };
 
+type FertilizationT = {
+  id: number;
+  createdAt: Date;
+  amount: number;
+  position: JsonValue[];
+};
+
 type FertilizationDataT = {
   date: Date;
   amount: number | '';
   position: CoordinateT[];
 };
 
-export type { CoordinateT, SampleDataT, FertilizationDataT, SampleT };
+export type {
+  CoordinateT,
+  SampleDataT,
+  FertilizationDataT,
+  SampleT,
+  FertilizationT,
+};

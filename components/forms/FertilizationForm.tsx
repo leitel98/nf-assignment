@@ -10,7 +10,7 @@ const FertilizationForm = () => {
       amount: '',
       position: [],
     });
-  console.log(fertilizationData);
+
   async function createFertilization(data: FertilizationDataT) {
     try {
       await fetch('/api/submit-fertilization', {
