@@ -9,24 +9,24 @@ import SampleCard from './atoms/SampleCard';
 
 const Dashboard = ({ samples }: { samples: any }) => {
   const [samplesData, setSamplesData] = useState(samples);
-  const sampleMapData: FeatureCollection = {
-    type: 'FeatureCollection',
-    features: samplesData.map((sample: any) => ({
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: [sample.position?.longitude, sample.position?.latitude],
-      },
-      properties: {
-        prop0: `value${sample.id}`,
-      },
-    })),
-  };
+  // const sampleMapData: FeatureCollection = {
+  //   type: 'FeatureCollection',
+  //   features: samplesData.map((sample: any) => ({
+  //     type: 'Feature',
+  //     geometry: {
+  //       type: 'Point',
+  //       coordinates: [sample.position?.longitude, sample.position?.latitude],
+  //     },
+  //     properties: {
+  //       prop0: `value${sample.id}`,
+  //     },
+  //   })),
+  // };
 
   return (
     <>
       <div className='grid grid-cols-3 gap-8 w-full'>
-        <CustomMap sampleData={sampleMapData} />
+        <CustomMap sampleData={samplesData} />
         <section className='flex flex-col items-center gap-4 h-min w-full rounded-lg bg-teal-600/30 shadow-lg shadow-teal-900 p-4 pb-8'>
           <SampleForm setSamples={setSamplesData} />
           <FertilizationForm />
