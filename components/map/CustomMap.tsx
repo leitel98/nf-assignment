@@ -1,11 +1,11 @@
 'use client';
 
-import Map, { Source, Layer, Marker, Popup } from 'react-map-gl';
-import type { CircleLayer } from 'react-map-gl';
+import { useState } from 'react';
 import type { FeatureCollection } from 'geojson';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import Pin from '@/public/icons/Pin';
-import { useState } from 'react';
+import Map, { Source, Layer, Marker, Popup } from 'react-map-gl';
+import type { CircleLayer } from 'react-map-gl';
 
 const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 

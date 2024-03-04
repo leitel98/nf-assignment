@@ -1,3 +1,7 @@
+'use client';
+
+import { useState } from 'react';
+
 const SampleCard = ({
   sample,
   setSamples,
@@ -5,6 +9,15 @@ const SampleCard = ({
   sample: any;
   setSamples: (prev: any) => void;
 }) => {
+  const [editting, setEditting] = useState(false);
+  const [data, setData] = useState({
+    ...sample,
+    date: sample.createdAt.getDate(),
+    month: sample.createdAt.getMonth() + 1,
+    year: sample.createdAt.getFullYear(),
+  });
+  console.log(data);
+
   const deleteSample = async (id: number) => {
     try {
       await fetch('/api/delete-sample', {
@@ -23,22 +36,166 @@ const SampleCard = ({
       console.error(error);
     }
   };
+
+  const updateSample = async (data: { data: any }) => {
+    try {
+      const response = await fetch('/api/update-sample', {
+        body: JSON.stringify(data),
+        headers: {
+          'Content-type': 'application/json',
+        },
+        method: 'POST',
+      });
+      if (response.ok) {
+        const updatedSample = await response.json();
+        setSamples((prev: any) => {
+          return prev.map((existingSample: any) =>
+            existingSample.id === updatedSample.id
+              ? updatedSample
+              : existingSample
+          );
+        });
+        setEditting(false);
+      } else {
+        console.error('Failed to update sample');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className='flex items-center justify-between bg-teal-600/30 rounded-md px-4 py-2 border-b border-r border-teal-600'>
       <div className='flex items-center w-full gap-4'>
-        <p>
-          {sample.createdAt?.getDate()}/{sample.createdAt?.getMonth() + 1}/
-          {sample.createdAt?.getFullYear()}
-        </p>
-        <p>🧪 Carbon: {sample.amount} kg</p>
-        <p>
-          🧭 Lat: {sample.position?.latitude.toFixed(2)} | Lon:{' '}
-          {sample.position?.longitude.toFixed(2)}
-        </p>
+        <div className='flex'>
+          <input
+            disabled={!editting}
+            type='number'
+            className={`w-6 rounded-md ${
+              editting
+                ? '!bg-zinc-600 border border-zinc-900'
+                : 'bg-transparent'
+            }`}
+            max={31}
+            value={data.date}
+            onChange={(e) =>
+              setData((prev: any) => {
+                return {
+                  ...prev,
+                  date: e.target.value,
+                };
+              })
+            }
+          />
+          /
+          <input
+            disabled={!editting}
+            type='number'
+            className={`w-6 rounded-md ${
+              editting ? 'bg-zinc-600 border border-zinc-900' : 'bg-transparent'
+            }`}
+            value={data.month}
+            max={12}
+            onChange={(e) =>
+              setData((prev: any) => {
+                return {
+                  ...prev,
+                  month: e.target.value,
+                };
+              })
+            }
+          />
+          /
+          <input
+            disabled={!editting}
+            type='number'
+            className={`w-10 rounded-md ${
+              editting ? 'bg-zinc-600 border border-zinc-900' : 'bg-transparent'
+            }`}
+            value={data.year}
+            onChange={(e) =>
+              setData((prev: any) => {
+                return {
+                  ...prev,
+                  year: e.target.value,
+                };
+              })
+            }
+          />
+        </div>
+        <div className='flex items-center'>
+          <p className='whitespace-nowrap'>🧪Carbon:</p>
+          <input
+            type='number'
+            disabled={!editting}
+            className={`w-6 rounded-md ${
+              editting ? 'bg-zinc-600 border border-zinc-900' : 'bg-transparent'
+            } `}
+            value={data.amount}
+            onChange={(e) =>
+              setData((prev: any) => {
+                return {
+                  ...prev,
+                  amount: e.target.value,
+                };
+              })
+            }
+          />{' '}
+          kg
+        </div>
+        <div className='flex'>
+          <div className='flex items-center'>
+            <p className='whitespace-nowrap'>🧭 Lat:</p>
+            <input
+              type='number'
+              disabled={!editting}
+              className={`w-20 rounded-md text-ellipsis ${
+                editting
+                  ? 'bg-zinc-600 border border-zinc-900'
+                  : 'bg-transparent'
+              }`}
+              value={data.position?.latitude}
+              onChange={(e) =>
+                setData((prev: any) => {
+                  return {
+                    ...prev,
+                    position: { ...prev.position, latitude: e.target.value },
+                  };
+                })
+              }
+            />
+          </div>
+          |
+          <div className='flex items-center ml-2'>
+            <p className='whitespace-nowrap'>Lon:</p>
+            <input
+              disabled={!editting}
+              className={`w-20 rounded-md text-ellipsis ${
+                editting
+                  ? 'bg-zinc-600 border border-zinc-900'
+                  : 'bg-transparent'
+              }`}
+              value={data.position?.longitude}
+              onChange={(e) =>
+                setData((prev: any) => {
+                  return {
+                    ...prev,
+                    position: { ...prev.position, longitude: e.target.value },
+                  };
+                })
+              }
+            />
+          </div>
+        </div>
       </div>
-      <div className='flex items-center'>
-        <button>✏️</button>
-        <button onClick={() => deleteSample(sample.id)}>🗑️</button>
+
+      <div className='flex items-center gap-2'>
+        {!editting ? (
+          <button onClick={() => setEditting(true)}>✏️</button>
+        ) : (
+          <button onClick={() => updateSample(data)}>💾</button>
+        )}
+        <button onClick={() => deleteSample(data.id)}>🗑️</button>
       </div>
     </div>
   );
