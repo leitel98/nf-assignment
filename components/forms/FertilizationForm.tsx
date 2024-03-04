@@ -11,6 +11,21 @@ const FertilizationForm = () => {
       position: [],
     });
   console.log(fertilizationData);
+  async function createFertilization(data: FertilizationDataT) {
+    try {
+      await fetch('/api/submit-fertilization', {
+        body: JSON.stringify(data),
+        headers: {
+          'Content-type': 'application/json',
+        },
+        method: 'POST',
+      });
+
+      window.location.href = '/';
+    } catch (error) {
+      console.error(error);
+    }
+  }
   return (
     <>
       <h3 className='text-xl font-medium'>Fertilization</h3>
@@ -44,7 +59,7 @@ const FertilizationForm = () => {
                   const newPosition = [...prev.position];
                   newPosition[index] = {
                     ...newPosition[index],
-                    longitude: parseInt(e.target.value),
+                    longitude: parseFloat(e.target.value),
                   };
                   return { ...prev, position: newPosition };
                 })
@@ -60,7 +75,7 @@ const FertilizationForm = () => {
                   const newPosition = [...prev.position];
                   newPosition[index] = {
                     ...newPosition[index],
-                    latitude: parseInt(e.target.value),
+                    latitude: parseFloat(e.target.value),
                   };
                   return { ...prev, position: newPosition };
                 })
@@ -71,7 +86,7 @@ const FertilizationForm = () => {
         ))}
       </section>
       <button
-        onClick={() => console.log(fertilizationData)}
+        onClick={() => createFertilization(fertilizationData)}
         className='rounded-lg px-4 py-2 bg-violet-700/30 border-b border-r border-violet-700 shadow-md shadow-violet-700 hover:scale-105 transition-none duration-75'
       >
         Send Fertilization
