@@ -4,24 +4,10 @@ import React, { useState } from 'react';
 import CustomMap from './map/CustomMap';
 import SampleForm from './forms/SampleForm';
 import FertilizationForm from './forms/FertilizationForm';
-import type { FeatureCollection } from 'geojson';
 import SampleCard from './atoms/SampleCard';
 
 const Dashboard = ({ samples }: { samples: any }) => {
   const [samplesData, setSamplesData] = useState(samples);
-  // const sampleMapData: FeatureCollection = {
-  //   type: 'FeatureCollection',
-  //   features: samplesData.map((sample: any) => ({
-  //     type: 'Feature',
-  //     geometry: {
-  //       type: 'Point',
-  //       coordinates: [sample.position?.longitude, sample.position?.latitude],
-  //     },
-  //     properties: {
-  //       prop0: `value${sample.id}`,
-  //     },
-  //   })),
-  // };
 
   return (
     <>

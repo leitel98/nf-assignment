@@ -95,7 +95,7 @@ const SampleForm = ({ setSamples }: { setSamples: (prev: any) => void }) => {
       </section>
       <button
         onClick={() => createSample(sampleData)}
-        className='rounded-lg px-4 py-2 bg-violet-700/30'
+        className='rounded-lg px-4 py-2 bg-violet-700/30 border-b border-r border-violet-700 shadow-md shadow-violet-700 hover:scale-105 transition-none duration-75'
       >
         Send Sample
       </button>

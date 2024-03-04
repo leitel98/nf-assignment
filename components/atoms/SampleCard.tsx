@@ -16,7 +16,6 @@ const SampleCard = ({
     month: sample.createdAt.getMonth() + 1,
     year: sample.createdAt.getFullYear(),
   });
-  console.log(data);
 
   const deleteSample = async (id: number) => {
     try {
