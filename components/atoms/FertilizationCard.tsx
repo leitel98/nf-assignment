@@ -2,7 +2,13 @@
 
 import { useState } from 'react';
 
-const FertilizationCard = ({ fertilization }: { fertilization: any }) => {
+const FertilizationCard = ({
+  fertilization,
+  setFertilizations,
+}: {
+  fertilization: any;
+  setFertilizations: (prev: any) => void;
+}) => {
   const [editting, setEditting] = useState(false);
   const [data, setData] = useState({
     ...fertilization,
@@ -11,6 +17,24 @@ const FertilizationCard = ({ fertilization }: { fertilization: any }) => {
     year: fertilization.createdAt.getFullYear(),
   });
 
+  const deleteFertilization = async (id: number) => {
+    try {
+      await fetch('/api/delete-fertilization', {
+        body: JSON.stringify(id),
+        headers: {
+          'Content-type': 'application/json',
+        },
+        method: 'POST',
+      });
+      setFertilizations((prev: any) => {
+        return prev.filter(
+          (existingSample: any) => existingSample.id != fertilization.id
+        );
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <div className='flex items-center justify-between bg-teal-600/30 rounded-md px-4 py-2 border-b border-r border-teal-600'>
       <div className='flex flex-col justify-between'>
@@ -72,11 +96,11 @@ const FertilizationCard = ({ fertilization }: { fertilization: any }) => {
           />
         </div>
         <div className='flex items-center'>
-          <p className='whitespace-nowrap'>🌱Fertilization:</p>
+          <p className='whitespace-nowrap'>🌱Fertilization:</p>{' '}
           <input
             type='number'
             disabled={!editting}
-            className={`w-10 rounded-md ${
+            className={`w-10 rounded-md ml-2 ${
               editting ? 'bg-zinc-600 border border-zinc-900' : 'bg-transparent'
             } `}
             value={data.amount}
@@ -91,6 +115,71 @@ const FertilizationCard = ({ fertilization }: { fertilization: any }) => {
           />{' '}
           kg
         </div>
+      </div>
+      <div className='grid grid-cols-2'>
+        {fertilization.position.map((coordinate: any, index: number) => {
+          if (index !== fertilization.position.length - 1)
+            return (
+              <div className='flex' key={index}>
+                <div className='flex items-center'>
+                  <p className='whitespace-nowrap'>🧭 Lat:</p>
+                  <input
+                    type='number'
+                    disabled={!editting}
+                    className={`w-20 rounded-md text-ellipsis ${
+                      editting
+                        ? 'bg-zinc-600 border border-zinc-900'
+                        : 'bg-transparent'
+                    }`}
+                    value={coordinate[1]}
+                    onChange={(e) =>
+                      setData((prev: any) => {
+                        return {
+                          ...prev,
+                          position: {
+                            ...prev.position,
+                            latitude: e.target.value,
+                          },
+                        };
+                      })
+                    }
+                  />
+                </div>
+                |
+                <div className='flex items-center ml-2'>
+                  <p className='whitespace-nowrap'>Lon:</p>
+                  <input
+                    disabled={!editting}
+                    className={`w-20 rounded-md text-ellipsis ${
+                      editting
+                        ? 'bg-zinc-600 border border-zinc-900'
+                        : 'bg-transparent'
+                    }`}
+                    value={coordinate[0]}
+                    onChange={(e) =>
+                      setData((prev: any) => {
+                        return {
+                          ...prev,
+                          position: {
+                            ...prev.position,
+                            longitude: e.target.value,
+                          },
+                        };
+                      })
+                    }
+                  />
+                </div>
+              </div>
+            );
+        })}
+      </div>
+      <div className='flex flex-col justify-between'>
+        {!editting ? (
+          <button onClick={() => setEditting(true)}>✏️</button>
+        ) : (
+          <button>💾</button>
+        )}
+        <button onClick={() => deleteFertilization(data.id)}>🗑️</button>
       </div>
     </div>
   );

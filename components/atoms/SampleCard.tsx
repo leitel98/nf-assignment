@@ -128,7 +128,7 @@ const SampleCard = ({
           <input
             type='number'
             disabled={!editting}
-            className={`w-6 rounded-md ${
+            className={`w-6 rounded-md text-center ${
               editting ? 'bg-zinc-600 border border-zinc-900' : 'bg-transparent'
             } `}
             value={data.amount}
