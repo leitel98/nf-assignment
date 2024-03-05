@@ -7,6 +7,7 @@ import FertilizationForm from './forms/FertilizationForm';
 import SampleCard from './atoms/SampleCard';
 import { FertilizationT, SampleT } from '@/types';
 import FertilizationCard from './atoms/FertilizationCard';
+import Graphics from './Graphics';
 
 interface DashboardI {
   samples: SampleT[];
@@ -68,7 +69,7 @@ const Dashboard = ({ samples, fertilizations }: DashboardI) => {
           </section>
         </div>
       </div>
-      <section className='flex gap-4 w-full bg-emerald-600/30 rounded-lg shadow-lg shadow-emerald-900 p-4'>
+      <section className='flex gap-4 w-full bg-emerald-600/30 rounded-lg shadow-lg shadow-emerald-900 p-4 h-[500px] overflow-y-scroll'>
         <div className='flex flex-col w-[65%] gap-2'>
           <h3 className='text-center text-xl font-medium'>Samples</h3>
           {samplesData.map((sample: any) => (
@@ -90,6 +91,10 @@ const Dashboard = ({ samples, fertilizations }: DashboardI) => {
           ))}
         </div>
       </section>
+      <Graphics
+        samplesData={samplesData}
+        fertilzationsData={fertilizationsData}
+      />
     </>
   );
 };
