@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import type { FeatureCollection } from 'geojson';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import Pin from '@/public/icons/Pin';
 import Map, { Source, Layer, Marker, Popup, LayerProps } from 'react-map-gl';
