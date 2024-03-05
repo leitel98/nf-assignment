@@ -41,7 +41,7 @@ const Dashboard = ({ samples, fertilizations }: DashboardI) => {
 
   return (
     <>
-      <div className='grid grid-cols-3 gap-8 w-full'>
+      <div className='flex flex-col-reverse lg:grid lg:grid-cols-3 gap-8 w-full'>
         <CustomMap
           sampleData={samplesData}
           fertilizationData={fertilizationsData}
@@ -69,8 +69,8 @@ const Dashboard = ({ samples, fertilizations }: DashboardI) => {
           </section>
         </div>
       </div>
-      <section className='flex gap-4 w-full bg-emerald-600/30 rounded-lg shadow-lg shadow-emerald-900 p-4 h-[500px] overflow-y-scroll'>
-        <div className='flex flex-col w-[65%] gap-2'>
+      <section className='flex flex-col lg:flex-row gap-4 w-full bg-emerald-600/30 rounded-lg shadow-lg shadow-emerald-900 p-4 h-[500px] overflow-y-scroll'>
+        <div className='flex flex-col w-full lg:w-[65%] gap-2'>
           <h3 className='text-center text-xl font-medium'>Samples</h3>
           {samplesData.map((sample: any) => (
             <SampleCard

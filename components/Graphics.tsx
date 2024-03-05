@@ -94,7 +94,7 @@ const Graphics = ({
           ➡️
         </button>
       </div>
-      <div className='grid grid-cols-2 gap-8 w-full h-full'>
+      <div className='flex flex-col lg:grid lg:grid-cols-2 gap-8 w-full h-full'>
         <div className='p-4 bg-zinc-900/10 rounded-lg border border-zinc-600/60 w-full'>
           <Bar data={samplesGraphData} />
         </div>
