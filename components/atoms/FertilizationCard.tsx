@@ -169,10 +169,10 @@ const FertilizationCard = ({
                 key={index}
               >
                 <div className='flex items-center'>
-                  <p className='whitespace-nowrap'>🧭 Lat:</p>
+                  <p className='whitespace-nowrap'>#{index + 1} 🧭 Lat:</p>
                   <input
                     disabled={!editting}
-                    className={`w-20 rounded-md text-ellipsis ${
+                    className={`w-16 rounded-md text-ellipsis ${
                       editting
                         ? 'bg-zinc-600 border border-zinc-900'
                         : 'bg-transparent'
@@ -199,7 +199,7 @@ const FertilizationCard = ({
                   <p className='whitespace-nowrap'>Lon:</p>
                   <input
                     disabled={!editting}
-                    className={`w-20 rounded-md text-ellipsis ${
+                    className={`w-16 rounded-md text-ellipsis ${
                       editting
                         ? 'bg-zinc-600 border border-zinc-900'
                         : 'bg-transparent'

@@ -150,7 +150,7 @@ const SampleCard = ({
               })
             }
           />{' '}
-          kg
+          %
         </div>
         <div className='flex p-2 m-1 bg-violet-600/25 rounded-md border border-violet-900'>
           <div className='flex items-center'>
@@ -158,7 +158,7 @@ const SampleCard = ({
             <input
               type='number'
               disabled={!editting}
-              className={`w-20 rounded-md text-ellipsis ${
+              className={`w-16 rounded-md text-ellipsis ${
                 editting
                   ? 'bg-zinc-600 border border-zinc-900'
                   : 'bg-transparent'
@@ -179,7 +179,7 @@ const SampleCard = ({
             <p className='whitespace-nowrap'>Lon:</p>
             <input
               disabled={!editting}
-              className={`w-20 rounded-md text-ellipsis ${
+              className={`w-16 rounded-md text-ellipsis ${
                 editting
                   ? 'bg-zinc-600 border border-zinc-900'
                   : 'bg-transparent'

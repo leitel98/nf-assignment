@@ -82,8 +82,8 @@ const CustomMap = ({
                   </p>
                   <p>🧪 Carbon: {sample.amount} kg</p>
                   <p>
-                    🧭 Lat: {sample.position?.latitude.toFixed(2)} | Lon:{' '}
-                    {sample.position?.longitude.toFixed(2)}
+                    🧭 Lat: {parseInt(sample.position?.latitude).toFixed(2)} |
+                    Lon: {parseInt(sample.position?.longitude).toFixed(2)}
                   </p>
                 </div>
               </Popup>
