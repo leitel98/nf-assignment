@@ -32,7 +32,7 @@ const FertilizationForm = ({
   }
   return (
     <>
-      <h3 className='text-xl font-medium'>Fertilization</h3>
+      <h3 className='text-xl font-medium'>New fertilization</h3>
       <section className='w-full flex flex-col gap-4'>
         <div className='flex w-full items-center gap-4'>
           <p className='text-xl'>🌱</p>
