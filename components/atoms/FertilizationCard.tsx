@@ -35,6 +35,37 @@ const FertilizationCard = ({
       console.error(error);
     }
   };
+
+  const updateFertilization = async (data: { data: any }) => {
+    try {
+      const response = await fetch('/api/update-fertilization', {
+        body: JSON.stringify(data),
+        headers: {
+          'Content-type': 'application/json',
+        },
+        method: 'POST',
+      });
+      if (response.ok) {
+        const { updatedFertilization } = await response.json();
+        console.log(updatedFertilization);
+        setFertilizations((prev: any) => {
+          return prev.map((existingSample: any) =>
+            existingSample.id === updatedFertilization
+            .id
+              ? updatedFertilization
+
+              : existingSample
+          );
+        });
+        setEditting(false);
+      } else {
+        console.error('Failed to update sample');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className='flex items-center justify-between bg-teal-600/30 rounded-md px-4 py-2 border-b border-r border-teal-600'>
       <div className='flex flex-col justify-between'>
@@ -182,7 +213,7 @@ const FertilizationCard = ({
         {!editting ? (
           <button onClick={() => setEditting(true)}>✏️</button>
         ) : (
-          <button>💾</button>
+          <button onClick={() => updateFertilization(data)}>💾</button>
         )}
         <button onClick={() => deleteFertilization(data.id)}>🗑️</button>
       </div>

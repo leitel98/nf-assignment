@@ -35,7 +35,7 @@ const CustomMap = ({
       'fill-opacity': 0.7,
     },
   };
-  console.log(fertilizations);
+
   return (
     <Map
       mapboxAccessToken={mapboxToken}

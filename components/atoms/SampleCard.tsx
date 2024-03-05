@@ -10,11 +10,16 @@ const SampleCard = ({
   setSamples: (prev: any) => void;
 }) => {
   const [editting, setEditting] = useState(false);
-  const [data, setData] = useState({
-    ...sample,
-    date: sample.createdAt.getDate(),
-    month: sample.createdAt.getMonth() + 1,
-    year: sample.createdAt.getFullYear(),
+  const [data, setData] = useState(() => {
+    const currentDate =
+      sample?.createdAt instanceof Date ? sample.createdAt : null;
+
+    return {
+      ...sample,
+      date: currentDate?.getDate(),
+      month: currentDate?.getMonth() + 1,
+      year: currentDate?.getFullYear(),
+    };
   });
 
   const deleteSample = async (id: number) => {
@@ -45,15 +50,19 @@ const SampleCard = ({
         },
         method: 'POST',
       });
+
       if (response.ok) {
-        const updatedSample = await response.json();
-        setSamples((prev: any) => {
-          return prev.map((existingSample: any) =>
+        const result = await response.json();
+        const { updatedSample } = result;
+
+        setSamples((prevSamples: any) => {
+          return prevSamples.map((existingSample: any) =>
             existingSample.id === updatedSample.id
               ? updatedSample
               : existingSample
           );
         });
+
         setEditting(false);
       } else {
         console.error('Failed to update sample');
