@@ -20,7 +20,10 @@ const Dashboard = ({ samples, fertilizations }: DashboardI) => {
   return (
     <>
       <div className='grid grid-cols-3 gap-8 w-full'>
-        <CustomMap sampleData={samplesData} />
+        <CustomMap
+          sampleData={samplesData}
+          fertilizationData={fertilizationsData}
+        />
         <section className='flex flex-col items-center gap-4 h-min w-full rounded-lg bg-teal-600/30 shadow-lg shadow-teal-900 p-4 pb-8'>
           <SampleForm setSamples={setSamplesData} />
           <FertilizationForm />

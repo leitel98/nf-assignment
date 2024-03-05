@@ -4,22 +4,38 @@ import { useState } from 'react';
 import type { FeatureCollection } from 'geojson';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import Pin from '@/public/icons/Pin';
-import Map, { Source, Layer, Marker, Popup } from 'react-map-gl';
-import type { CircleLayer } from 'react-map-gl';
+import Map, { Source, Layer, Marker, Popup, LayerProps } from 'react-map-gl';
+import { GeoJSONSourceOptions } from 'mapbox-gl';
 
 const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 
-const sampleLayerStyle: CircleLayer = {
-  id: 'point',
-  type: 'circle',
-  paint: {
-    'circle-radius': 8,
-    'circle-color': 'red',
-  },
-};
-
-const CustomMap = ({ sampleData }: { sampleData: any }) => {
+const CustomMap = ({
+  sampleData,
+  fertilizationData,
+}: {
+  sampleData: any;
+  fertilizationData: any;
+}) => {
   const [hoveredId, setHoveredId] = useState(null);
+
+  const fertilizations: GeoJSONSourceOptions['data'] = {
+    type: 'FeatureCollection',
+    features: fertilizationData.map((data: any) => ({
+      id: data.id,
+      type: 'Feature',
+      geometry: { type: 'Polygon', coordinates: [data.position] },
+    })),
+  };
+  const fertilizationStyles: LayerProps = {
+    id: 'data_style',
+    type: 'fill',
+    source: 'fertilizations',
+    paint: {
+      'fill-color': 'green',
+      'fill-opacity': 0.7,
+    },
+  };
+  console.log(fertilizations);
   return (
     <Map
       mapboxAccessToken={mapboxToken}
@@ -33,6 +49,9 @@ const CustomMap = ({ sampleData }: { sampleData: any }) => {
       maxZoom={20}
       minZoom={3}
     >
+      <Source id='fertilizations' type='geojson' data={fertilizations}>
+        <Layer {...fertilizationStyles} />
+      </Source>
       {sampleData.map((sample: any) => (
         <Marker
           key={sample.id}
@@ -71,9 +90,6 @@ const CustomMap = ({ sampleData }: { sampleData: any }) => {
           </div>
         </Marker>
       ))}
-      {/* <Source id='my-data' type='geojson' data={sampleData}>
-        <Layer {...sampleLayerStyle} />
-      </Source> */}
     </Map>
   );
 };

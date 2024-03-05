@@ -16,7 +16,6 @@ const FertilizationCard = ({
     month: fertilization.createdAt.getMonth() + 1,
     year: fertilization.createdAt.getFullYear(),
   });
-  console.log(data);
 
   const deleteFertilization = async (id: number) => {
     try {
