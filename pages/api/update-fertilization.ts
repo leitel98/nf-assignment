@@ -23,17 +23,15 @@ export default async function handler(
       },
       data: {
         createdAt: new Date(year, month - 1, date),
-        amount: amount,
-        position: position,
+        amount: parseInt(amount),
+        position: reformattedFertilization.position,
       },
     });
 
-    res
-      .status(200)
-      .json({
-        updatedFertilization: updatedFertilization,
-        message: 'fertilization updated',
-      });
+    res.status(200).json({
+      updatedFertilization: updatedFertilization,
+      message: 'fertilization updated',
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });

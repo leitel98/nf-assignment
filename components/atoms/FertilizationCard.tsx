@@ -10,11 +10,16 @@ const FertilizationCard = ({
   setFertilizations: (prev: any) => void;
 }) => {
   const [editting, setEditting] = useState(false);
-  const [data, setData] = useState({
-    ...fertilization,
-    date: fertilization.createdAt.getDate(),
-    month: fertilization.createdAt.getMonth() + 1,
-    year: fertilization.createdAt.getFullYear(),
+  const [data, setData] = useState(() => {
+    const currentDate =
+      fertilization.createdAt instanceof Date ? fertilization.createdAt : null;
+
+    return {
+      ...fertilization,
+      date: currentDate?.getDate(),
+      month: currentDate?.getMonth() + 1,
+      year: currentDate?.getFullYear(),
+    };
   });
 
   const deleteFertilization = async (id: number) => {
@@ -46,20 +51,19 @@ const FertilizationCard = ({
         method: 'POST',
       });
       if (response.ok) {
-        const { updatedFertilization } = await response.json();
-        console.log(updatedFertilization);
-        setFertilizations((prev: any) => {
-          return prev.map((existingSample: any) =>
-            existingSample.id === updatedFertilization
-            .id
-              ? updatedFertilization
+        const result = await response.json();
+        const { updatedFertilization } = result;
 
-              : existingSample
+        setFertilizations((prev: any) => {
+          return prev.map((existingFertilization: any) =>
+            existingFertilization.id === updatedFertilization.id
+              ? updatedFertilization
+              : existingFertilization
           );
         });
         setEditting(false);
       } else {
-        console.error('Failed to update sample');
+        console.error('Failed to update fertilization');
       }
     } catch (error) {
       console.error(error);
