@@ -16,6 +16,7 @@ const FertilizationCard = ({
     month: fertilization.createdAt.getMonth() + 1,
     year: fertilization.createdAt.getFullYear(),
   });
+  console.log(data);
 
   const deleteFertilization = async (id: number) => {
     try {
@@ -117,14 +118,13 @@ const FertilizationCard = ({
         </div>
       </div>
       <div className='grid grid-cols-2'>
-        {fertilization.position.map((coordinate: any, index: number) => {
+        {data.position.map((coordinate: any, index: number) => {
           if (index !== fertilization.position.length - 1)
             return (
               <div className='flex' key={index}>
                 <div className='flex items-center'>
                   <p className='whitespace-nowrap'>🧭 Lat:</p>
                   <input
-                    type='number'
                     disabled={!editting}
                     className={`w-20 rounded-md text-ellipsis ${
                       editting
@@ -132,17 +132,20 @@ const FertilizationCard = ({
                         : 'bg-transparent'
                     }`}
                     value={coordinate[1]}
-                    onChange={(e) =>
-                      setData((prev: any) => {
-                        return {
-                          ...prev,
-                          position: {
-                            ...prev.position,
-                            latitude: e.target.value,
-                          },
-                        };
-                      })
-                    }
+                    onChange={(e) => {
+                      setData((prev: any) => ({
+                        ...prev,
+                        position: prev.position.map(
+                          (coordinatex: any, idx: number) => {
+                            if (index === idx) {
+                              return [coordinatex[0], e.target.value];
+                            } else {
+                              return coordinatex;
+                            }
+                          }
+                        ),
+                      }));
+                    }}
                   />
                 </div>
                 |
@@ -156,17 +159,20 @@ const FertilizationCard = ({
                         : 'bg-transparent'
                     }`}
                     value={coordinate[0]}
-                    onChange={(e) =>
-                      setData((prev: any) => {
-                        return {
-                          ...prev,
-                          position: {
-                            ...prev.position,
-                            longitude: e.target.value,
-                          },
-                        };
-                      })
-                    }
+                    onChange={(e) => {
+                      setData((prev: any) => ({
+                        ...prev,
+                        position: prev.position.map(
+                          (coordinatex: any, idx: number) => {
+                            if (index === idx) {
+                              return [coordinatex[1], e.target.value];
+                            } else {
+                              return coordinatex;
+                            }
+                          }
+                        ),
+                      }));
+                    }}
                   />
                 </div>
               </div>
