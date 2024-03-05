@@ -26,6 +26,7 @@ const CustomMap = ({
       geometry: { type: 'Polygon', coordinates: [data.position] },
     })),
   };
+
   const fertilizationStyles: LayerProps = {
     id: 'data_style',
     type: 'fill',

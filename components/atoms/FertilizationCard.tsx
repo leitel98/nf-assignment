@@ -53,11 +53,20 @@ const FertilizationCard = ({
       if (response.ok) {
         const result = await response.json();
         const { updatedFertilization } = result;
+        const modPosition = updatedFertilization.position.map((coord: any) => [
+          coord.longitude,
+          coord.latitude,
+        ]);
+        modPosition.push(modPosition[0]);
+        const reformattedFertilization = {
+          ...updatedFertilization,
+          position: modPosition,
+        };
 
         setFertilizations((prev: any) => {
           return prev.map((existingFertilization: any) =>
-            existingFertilization.id === updatedFertilization.id
-              ? updatedFertilization
+            existingFertilization.id === reformattedFertilization.id
+              ? reformattedFertilization
               : existingFertilization
           );
         });
@@ -155,7 +164,10 @@ const FertilizationCard = ({
         {data.position.map((coordinate: any, index: number) => {
           if (index !== fertilization.position.length - 1)
             return (
-              <div className='flex' key={index}>
+              <div
+                className='flex p-2 m-1 bg-violet-600/25 rounded-md border border-violet-900'
+                key={index}
+              >
                 <div className='flex items-center'>
                   <p className='whitespace-nowrap'>🧭 Lat:</p>
                   <input
@@ -199,7 +211,7 @@ const FertilizationCard = ({
                         position: prev.position.map(
                           (coordinatex: any, idx: number) => {
                             if (index === idx) {
-                              return [coordinatex[1], e.target.value];
+                              return [e.target.value, coordinatex[1]];
                             } else {
                               return coordinatex;
                             }

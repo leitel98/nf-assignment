@@ -152,7 +152,7 @@ const SampleCard = ({
           />{' '}
           kg
         </div>
-        <div className='flex'>
+        <div className='flex p-2 m-1 bg-violet-600/25 rounded-md border border-violet-900'>
           <div className='flex items-center'>
             <p className='whitespace-nowrap'>🧭 Lat:</p>
             <input

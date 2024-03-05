@@ -16,7 +16,8 @@ interface DashboardI {
 const Dashboard = ({ samples, fertilizations }: DashboardI) => {
   const [samplesData, setSamplesData] = useState(samples);
   const [fertilizationsData, setFertilizationsData] = useState(fertilizations);
-  console.log(fertilizationsData);
+  console.log(fertilizationsData)
+
   return (
     <>
       <div className='grid grid-cols-3 gap-8 w-full'>
