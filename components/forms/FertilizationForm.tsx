@@ -3,7 +3,11 @@
 import { useState } from 'react';
 import { FertilizationDataT } from '@/types';
 
-const FertilizationForm = () => {
+const FertilizationForm = ({
+  setFertilizations,
+}: {
+  setFertilizations: (prev: any) => void;
+}) => {
   const [fertilizationData, setFertilizationData] =
     useState<FertilizationDataT>({
       date: new Date(),

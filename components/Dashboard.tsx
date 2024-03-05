@@ -13,9 +13,30 @@ interface DashboardI {
   fertilizations: FertilizationT[];
 }
 
+export interface DisplayItem {
+  tag: string;
+  show: boolean;
+}
+
+const DISPLAY: Record<string, DisplayItem> = {
+  samples: { tag: 'samples', show: true },
+  fertilizations: { tag: 'fertilizations', show: true },
+};
+
 const Dashboard = ({ samples, fertilizations }: DashboardI) => {
   const [samplesData, setSamplesData] = useState(samples);
   const [fertilizationsData, setFertilizationsData] = useState(fertilizations);
+  const [display, setDisplay] = useState(DISPLAY);
+
+  const toggleDisplay = (key: string) => {
+    setDisplay((prevDisplay) => ({
+      ...prevDisplay,
+      [key]: {
+        ...prevDisplay[key],
+        show: !prevDisplay[key].show,
+      },
+    }));
+  };
 
   return (
     <>
@@ -23,11 +44,29 @@ const Dashboard = ({ samples, fertilizations }: DashboardI) => {
         <CustomMap
           sampleData={samplesData}
           fertilizationData={fertilizationsData}
+          display={display}
         />
-        <section className='flex flex-col items-center gap-4 h-min w-full rounded-lg bg-teal-600/30 shadow-lg shadow-teal-900 p-4 pb-8'>
-          <SampleForm setSamples={setSamplesData} />
-          <FertilizationForm />
-        </section>
+        <div className='flex flex-col w-full gap-8'>
+          <div className='p-4 rounded-lg bg-emerald-600/30 flex items-center justify-around w-full  shadow-md shadow-emerald-600/50'>
+            {Object.entries(display).map(([key, type], idx) => (
+              <button
+                key={idx}
+                onClick={() => toggleDisplay(key)}
+                className={`capitalize text-xl font-medium px-4 py-2 rounded-md hover:scale-105 transition-all duration-100 ${
+                  type.show
+                    ? 'bg-violet-600/50 border border-violet-600 shadow-md shadow-violet-600/30'
+                    : 'bg-zinc-400/10'
+                }`}
+              >
+                {type.tag}
+              </button>
+            ))}
+          </div>
+          <section className='flex flex-col items-center gap-4 h-min w-full rounded-lg bg-teal-600/30 shadow-lg shadow-teal-900 p-4 pb-8'>
+            <SampleForm setSamples={setSamplesData} />
+            <FertilizationForm setFertilizations={setFertilizationsData} />
+          </section>
+        </div>
       </div>
       <section className='flex gap-4 w-full bg-emerald-600/30 rounded-lg shadow-lg shadow-emerald-900 p-4'>
         <div className='flex flex-col w-[65%] gap-2'>

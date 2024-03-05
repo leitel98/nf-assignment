@@ -6,15 +6,18 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import Pin from '@/public/icons/Pin';
 import Map, { Source, Layer, Marker, Popup, LayerProps } from 'react-map-gl';
 import { GeoJSONSourceOptions } from 'mapbox-gl';
+import { DisplayItem } from '../Dashboard';
 
 const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 
 const CustomMap = ({
   sampleData,
   fertilizationData,
+  display,
 }: {
   sampleData: any;
   fertilizationData: any;
+  display: Record<string, DisplayItem>;
 }) => {
   const [hoveredId, setHoveredId] = useState(null);
 
@@ -50,47 +53,50 @@ const CustomMap = ({
       maxZoom={20}
       minZoom={3}
     >
-      <Source id='fertilizations' type='geojson' data={fertilizations}>
-        <Layer {...fertilizationStyles} />
-      </Source>
-      {sampleData.map((sample: any) => (
-        <Marker
-          key={sample.id}
-          longitude={sample.position?.longitude}
-          latitude={sample.position?.latitude}
-        >
-          <div
-            onMouseEnter={() => setHoveredId(sample.id)}
-            onMouseLeave={() => setHoveredId(null)}
+      {display.fertilizations.show && (
+        <Source id='fertilizations' type='geojson' data={fertilizations}>
+          <Layer {...fertilizationStyles} />
+        </Source>
+      )}
+      {display.samples.show &&
+        sampleData.map((sample: any) => (
+          <Marker
+            key={sample.id}
+            longitude={sample.position?.longitude}
+            latitude={sample.position?.latitude}
           >
-            <Pin className='stroke-white fill-blue-700 w-8 h-8' />
-            {hoveredId === sample.id && (
-              <Popup
-                longitude={sample.position?.longitude}
-                latitude={sample.position?.latitude}
-                closeButton={false}
-                closeOnClick={false}
-                onClose={() => console.log('Popup closed')}
-                anchor='top'
-              >
-                <div className='flex flex-col'>
-                  <p>
-                    📅 Date:
-                    {sample.createdAt?.getDate()}/
-                    {sample.createdAt?.getMonth() + 1}/
-                    {sample.createdAt?.getFullYear()}
-                  </p>
-                  <p>🧪 Carbon: {sample.amount} kg</p>
-                  <p>
-                    🧭 Lat: {parseInt(sample.position?.latitude).toFixed(2)} |
-                    Lon: {parseInt(sample.position?.longitude).toFixed(2)}
-                  </p>
-                </div>
-              </Popup>
-            )}
-          </div>
-        </Marker>
-      ))}
+            <div
+              onMouseEnter={() => setHoveredId(sample.id)}
+              onMouseLeave={() => setHoveredId(null)}
+            >
+              <Pin className='stroke-white fill-blue-700 w-8 h-8' />
+              {hoveredId === sample.id && (
+                <Popup
+                  longitude={sample.position?.longitude}
+                  latitude={sample.position?.latitude}
+                  closeButton={false}
+                  closeOnClick={false}
+                  onClose={() => console.log('Popup closed')}
+                  anchor='top'
+                >
+                  <div className='flex flex-col'>
+                    <p>
+                      📅 Date:
+                      {sample.createdAt?.getDate()}/
+                      {sample.createdAt?.getMonth() + 1}/
+                      {sample.createdAt?.getFullYear()}
+                    </p>
+                    <p>🧪 Carbon: {sample.amount} kg</p>
+                    <p>
+                      🧭 Lat: {parseInt(sample.position?.latitude).toFixed(2)} |
+                      Lon: {parseInt(sample.position?.longitude).toFixed(2)}
+                    </p>
+                  </div>
+                </Popup>
+              )}
+            </div>
+          </Marker>
+        ))}
     </Map>
   );
 };
