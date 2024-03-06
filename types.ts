@@ -28,7 +28,7 @@ type FertilizationT = {
 type FertilizationDataT = {
   date: Date;
   amount: number | '';
-  position: CoordinateT[];
+  position: CoordinateT[] | [];
 };
 
 export type {

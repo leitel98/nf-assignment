@@ -11,15 +11,18 @@ export default async function handler(
     if (!req.body) {
       res.status(400).json({ message: 'Missing required fields' });
     }
-    await prisma.fertilization.create({
+    const newFertilization = await prisma.fertilization.create({
       data: {
-        createdAt: new date(),
+        createdAt: new Date(date),
         amount: parseInt(amount),
         position,
       },
     });
 
-    res.status(200).json({ message: 'Fertilization created' });
+    res.status(200).json({
+      newFertilization: newFertilization,
+      message: 'Fertilization created',
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });

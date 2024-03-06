@@ -3,21 +3,24 @@
 import { useState } from 'react';
 import { FertilizationDataT } from '@/types';
 
+const INITIAL_FERTILIZATION_FORM: FertilizationDataT = {
+  date: new Date(),
+  amount: '',
+  position: [],
+};
+
 const FertilizationForm = ({
   setFertilizations,
 }: {
   setFertilizations: (prev: any) => void;
 }) => {
-  const [fertilizationData, setFertilizationData] =
-    useState<FertilizationDataT>({
-      date: new Date(),
-      amount: '',
-      position: [],
-    });
+  const [fertilizationData, setFertilizationData] = useState(
+    INITIAL_FERTILIZATION_FORM
+  );
 
   async function createFertilization(data: FertilizationDataT) {
     try {
-      await fetch('/api/submit-fertilization', {
+      const response = await fetch('/api/submit-fertilization', {
         body: JSON.stringify(data),
         headers: {
           'Content-type': 'application/json',
@@ -25,7 +28,27 @@ const FertilizationForm = ({
         method: 'POST',
       });
 
-      window.location.href = '/';
+      if (response.ok) {
+        const result = await response.json();
+        const { newFertilization } = result;
+
+        const modPosition = newFertilization.position.map((coord: any) => [
+          coord.longitude,
+          coord.latitude,
+        ]);
+        modPosition.push(modPosition[0]);
+
+        const reformattedFertilization = {
+          ...newFertilization,
+          position: modPosition,
+          createdAt: new Date(newFertilization.createdAt),
+        };
+
+        setFertilizations((prev: any) => {
+          return [...prev, reformattedFertilization];
+        });
+        setFertilizationData(INITIAL_FERTILIZATION_FORM);
+      }
     } catch (error) {
       console.error(error);
     }

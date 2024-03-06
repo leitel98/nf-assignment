@@ -39,6 +39,17 @@ const CustomMap = ({
     },
   };
 
+  const fertilizationStylesOutline: LayerProps = {
+    id: 'outline',
+    type: 'line',
+    source: 'fertilizations',
+    paint: {
+      'line-color': 'brown',
+      'line-width': 3,
+      'line-opacity': 0.7
+    },
+  };
+
   return (
     <Map
       mapboxAccessToken={mapboxToken}
@@ -55,6 +66,7 @@ const CustomMap = ({
       {display.fertilizations.show && (
         <Source id='fertilizations' type='geojson' data={fertilizations}>
           <Layer {...fertilizationStyles} />
+          <Layer {...fertilizationStylesOutline} />
         </Source>
       )}
       {display.samples.show &&
@@ -87,8 +99,8 @@ const CustomMap = ({
                     </p>
                     <p>🧪 Carbon: {sample.amount} kg</p>
                     <p>
-                      🧭 Lat: {parseInt(sample.position?.latitude).toFixed(2)} |
-                      Lon: {parseInt(sample.position?.longitude).toFixed(2)}
+                      🧭 Lat: {parseFloat(sample.position?.latitude).toFixed(4)}{' '}
+                      | Lon: {parseFloat(sample.position?.longitude).toFixed(4)}
                     </p>
                   </div>
                 </Popup>
