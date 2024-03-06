@@ -69,7 +69,7 @@ const Dashboard = ({ samples, fertilizations }: DashboardI) => {
           </section>
         </div>
       </div>
-      <section className='flex flex-col lg:flex-row gap-4 w-full bg-emerald-600/30 rounded-lg shadow-lg shadow-emerald-900 p-4 h-[500px] overflow-y-scroll'>
+      <section className='flex flex-col lg:flex-row gap-4 w-full bg-emerald-600/30 rounded-lg shadow-lg shadow-emerald-900 p-4 h-[1000px] lg:h-[500px] overflow-y-scroll'>
         <div className='flex flex-col w-full lg:w-[65%] gap-2'>
           <h3 className='text-center text-xl font-medium'>Samples</h3>
           {samplesData.map((sample: any) => (

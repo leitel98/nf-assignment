@@ -20,7 +20,7 @@ const SampleForm = ({ setSamples }: { setSamples: (prev: any) => void }) => {
           <input
             type='number'
             placeholder='Average Carbon %'
-            value={sampleData.amount}
+            value={sampleData.amount || ''}
             onChange={handleCarbonAmount}
             className='w-full focus:outline-none rounded-lg bg-slate-400 text-slate-900 placeholder-slate-700 px-4 py-2'
           />
@@ -30,14 +30,14 @@ const SampleForm = ({ setSamples }: { setSamples: (prev: any) => void }) => {
           <input
             type='number'
             placeholder='Longitude'
-            value={sampleData.position.longitude}
+            value={sampleData.position.longitude || ''}
             onChange={handleLongitude}
             className='w-full focus:outline-none rounded-lg bg-slate-400 text-slate-900 placeholder-slate-700 px-4 py-2'
           />
           <input
             type='number'
             placeholder='Latitude'
-            value={sampleData.position.latitude}
+            value={sampleData.position.latitude || ''}
             onChange={handleLatitude}
             className='w-full focus:outline-none rounded-lg bg-slate-400 text-slate-900 placeholder-slate-700 px-4 py-2'
           />
