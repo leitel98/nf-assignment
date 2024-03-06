@@ -1,5 +1,5 @@
-import { FertilizationDataT } from '@/types';
-import React, { ChangeEvent, useState } from 'react';
+import { FertilizationDataT, FertilizationT } from '@/types';
+import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 
 const INITIAL_FERTILIZATION_FORM: FertilizationDataT = {
   date: new Date(),
@@ -7,7 +7,9 @@ const INITIAL_FERTILIZATION_FORM: FertilizationDataT = {
   position: [],
 };
 
-const useFertilizationForm = (setFertilizations: (prev: any) => void) => {
+const useFertilizationForm = (
+  setFertilizations: Dispatch<SetStateAction<FertilizationT[]>>
+) => {
   const [fertilizationData, setFertilizationData] = useState(
     INITIAL_FERTILIZATION_FORM
   );

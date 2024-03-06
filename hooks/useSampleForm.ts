@@ -1,5 +1,5 @@
 import { SampleDataT, SampleT } from '@/types';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 
 const INITIAL_FORM: SampleDataT = {
   date: new Date(),
@@ -10,7 +10,7 @@ const INITIAL_FORM: SampleDataT = {
   },
 };
 
-const useSampleForm = (setSamples: (prev: any) => void) => {
+const useSampleForm = (setSamples: Dispatch<SetStateAction<SampleT[]>>) => {
   const [sampleData, setSampleData] = useState<SampleDataT>(INITIAL_FORM);
 
   async function createSample(data: SampleDataT) {
