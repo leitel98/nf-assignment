@@ -61,6 +61,7 @@ const FertilizationCard = ({
         const reformattedFertilization = {
           ...updatedFertilization,
           position: modPosition,
+          createdAt: new Date(updatedFertilization.createdAt),
         };
 
         setFertilizations((prev: any) => {
@@ -167,14 +168,14 @@ const FertilizationCard = ({
             kg
           </div>
         </div>
-            <div className='flex lg:hidden flex-col justify-between'>
-              {!editting ? (
-                <button onClick={() => setEditting(true)}>✏️</button>
-              ) : (
-                <button onClick={() => updateFertilization(data)}>💾</button>
-              )}
-              <button onClick={() => deleteFertilization(data.id)}>🗑️</button>
-            </div>
+        <div className='flex lg:hidden flex-col justify-between'>
+          {!editting ? (
+            <button onClick={() => setEditting(true)}>✏️</button>
+          ) : (
+            <button onClick={() => updateFertilization(data)}>💾</button>
+          )}
+          <button onClick={() => deleteFertilization(data.id)}>🗑️</button>
+        </div>
       </div>
       <div className='grid grid-cols-1 2xl:grid-cols-2'>
         {data.position.map((coordinate: any, index: number) => {

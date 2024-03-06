@@ -54,6 +54,7 @@ const SampleCard = ({
       if (response.ok) {
         const result = await response.json();
         const { updatedSample } = result;
+        updatedSample.createdAt = new Date(updatedSample.createdAt)
 
         setSamples((prevSamples: any) => {
           return prevSamples.map((existingSample: any) =>
