@@ -97,7 +97,7 @@ const CustomMap = ({
                       {sample.createdAt?.getMonth() + 1}/
                       {sample.createdAt?.getFullYear()}
                     </p>
-                    <p>🧪 Carbon: {sample.amount} kg</p>
+                    <p>🧪 Carbon: {sample.amount} %</p>
                     <p>
                       🧭 Lat: {parseFloat(sample.position?.latitude).toFixed(4)}{' '}
                       | Lon: {parseFloat(sample.position?.longitude).toFixed(4)}
