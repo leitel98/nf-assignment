@@ -1,8 +1,14 @@
 'use client';
 
 import useSampleForm from '@/hooks/useSampleForm';
+import { SampleT } from '@/types';
+import { Dispatch, SetStateAction } from 'react';
 
-const SampleForm = ({ setSamples }: { setSamples: (prev: any) => void }) => {
+const SampleForm = ({
+  setSamples,
+}: {
+  setSamples: Dispatch<SetStateAction<SampleT[]>>;
+}) => {
   const {
     sampleData,
     createSample,

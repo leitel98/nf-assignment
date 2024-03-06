@@ -1,11 +1,13 @@
 'use client';
 
 import useFertilizationForm from '@/hooks/useFertilizationForm';
+import { FertilizationT } from '@/types';
+import { Dispatch, SetStateAction } from 'react';
 
 const FertilizationForm = ({
   setFertilizations,
 }: {
-  setFertilizations: (prev: any) => void;
+  setFertilizations: Dispatch<SetStateAction<FertilizationT[]>>;
 }) => {
   const {
     fertilizationData,
@@ -14,7 +16,7 @@ const FertilizationForm = ({
     handleLongitudeChange,
     createFertilization,
   } = useFertilizationForm(setFertilizations);
-  
+
   return (
     <>
       <h3 className='text-xl font-medium'>New fertilization</h3>
