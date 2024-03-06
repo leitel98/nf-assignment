@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { SampleDataT } from '@/types';
+import { ChangeEvent, useState } from 'react';
+import { SampleDataT, SampleT } from '@/types';
 
 const INITIAL_FORM: SampleDataT = {
   date: new Date(),
@@ -17,7 +17,7 @@ const SampleForm = ({ setSamples }: { setSamples: (prev: any) => void }) => {
 
   async function createSample(data: SampleDataT) {
     try {
-      await fetch('/api/submit-sample', {
+      const response = await fetch('/api/submit-sample', {
         body: JSON.stringify(data),
         headers: {
           'Content-type': 'application/json',
@@ -25,11 +25,56 @@ const SampleForm = ({ setSamples }: { setSamples: (prev: any) => void }) => {
         method: 'POST',
       });
 
-      window.location.href = '/';
+      if (response.ok) {
+        const result = await response.json();
+        const { newSample } = result;
+        newSample.createdAt = new Date(newSample.createdAt);
+
+        setSamples((prevSamples: SampleT[]) => {
+          return [...prevSamples, newSample];
+        });
+        setSampleData(INITIAL_FORM);
+      }
     } catch (error) {
       console.error(error);
     }
   }
+
+  const handleCarbonAmount = (e: ChangeEvent<HTMLInputElement>) => {
+    setSampleData((prev) => {
+      const newAmount = parseFloat(e.target.value);
+      return {
+        ...prev,
+        amount: isNaN(newAmount) ? 0 : newAmount,
+      };
+    });
+  };
+
+  const handleLongitude = (e: ChangeEvent<HTMLInputElement>) => {
+    setSampleData((prev) => {
+      const newAmount = parseFloat(e.target.value);
+      return {
+        ...prev,
+        position: {
+          ...prev.position,
+          longitude: isNaN(newAmount) ? '' : newAmount,
+        },
+      };
+    });
+  };
+
+  const handleLatitude = (e: ChangeEvent<HTMLInputElement>) => {
+    setSampleData((prev) => {
+      const newAmount = parseFloat(e.target.value);
+      return {
+        ...prev,
+        position: {
+          ...prev.position,
+          latitude: newAmount,
+        },
+      };
+    });
+  };
 
   return (
     <>
@@ -41,15 +86,7 @@ const SampleForm = ({ setSamples }: { setSamples: (prev: any) => void }) => {
             type='number'
             placeholder='Average Carbon %'
             value={sampleData.amount}
-            onChange={(e) =>
-              setSampleData((prev) => {
-                const newAmount = parseFloat(e.target.value);
-                return {
-                  ...prev,
-                  amount: isNaN(newAmount) ? 0 : newAmount,
-                };
-              })
-            }
+            onChange={handleCarbonAmount}
             className='w-full focus:outline-none rounded-lg bg-slate-400 text-slate-900 placeholder-slate-700 px-4 py-2'
           />
         </div>
@@ -59,36 +96,14 @@ const SampleForm = ({ setSamples }: { setSamples: (prev: any) => void }) => {
             type='number'
             placeholder='Longitude'
             value={sampleData.position.longitude}
-            onChange={(e) =>
-              setSampleData((prev) => {
-                const newAmount = parseFloat(e.target.value);
-                return {
-                  ...prev,
-                  position: {
-                    ...prev.position,
-                    longitude: isNaN(newAmount) ? 0 : newAmount,
-                  },
-                };
-              })
-            }
+            onChange={handleLongitude}
             className='w-full focus:outline-none rounded-lg bg-slate-400 text-slate-900 placeholder-slate-700 px-4 py-2'
           />
           <input
             type='number'
             placeholder='Latitude'
             value={sampleData.position.latitude}
-            onChange={(e) =>
-              setSampleData((prev) => {
-                const newAmount = parseFloat(e.target.value);
-                return {
-                  ...prev,
-                  position: {
-                    ...prev.position,
-                    latitude: isNaN(newAmount) ? 0 : newAmount,
-                  },
-                };
-              })
-            }
+            onChange={handleLatitude}
             className='w-full focus:outline-none rounded-lg bg-slate-400 text-slate-900 placeholder-slate-700 px-4 py-2'
           />
         </div>

@@ -11,7 +11,7 @@ export default async function handler(
     if (!req.body) {
       res.status(400).json({ message: 'Missing required fields' });
     }
-    await prisma.sample.create({
+    const newSample = await prisma.sample.create({
       data: {
         createdAt: date,
         amount,
@@ -19,7 +19,7 @@ export default async function handler(
       },
     });
 
-    res.status(200).json({ message: 'Sample created' });
+    res.status(201).json({ newSample: newSample, message: 'Sample created' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });

@@ -13,8 +13,8 @@ export default async function handler(
     }
     await prisma.fertilization.create({
       data: {
-        createdAt: date,
-        amount,
+        createdAt: new date(),
+        amount: parseInt(amount),
         position,
       },
     });
