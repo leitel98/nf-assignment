@@ -2,9 +2,7 @@ import { prisma } from '../lib/prisma';
 import { FertilizationT, SampleT } from '@/types';
 import Dashboard from '@/components/Dashboard';
 
-export const dynamic = () => {
-  return 'force-dynamic';
-};
+export const dynamic = 'force-dynamic';
 
 export default async function Home() {
   const samples: SampleT[] = await prisma.sample.findMany();
